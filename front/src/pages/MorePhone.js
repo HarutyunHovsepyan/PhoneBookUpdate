@@ -1,17 +1,16 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { morePhone } from "../store/phoneSlice"
+import { getMorePhone } from "../store/phoneSlice"
 import '../style/morePhone.css'
 
 function MorePhone() {
     const { id } = useParams()
     const dispatch = useDispatch()
     let phones = useSelector(state => state.phones.phones)
-
     useEffect(() => {
-        dispatch(morePhone(id))
-    }, [id])
+        dispatch(getMorePhone(id))
+    }, [])
     return (
         <div className="container">
             <header className="hero">

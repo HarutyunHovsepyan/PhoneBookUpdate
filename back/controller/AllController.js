@@ -19,7 +19,7 @@ class AllController {
 
     static async getPhone(req, res) {
         const phones = await Phonebook.findOne({ where: { id: req.params.id } })
-        res.send({ phones: phones })
+        res.send({ phones })
     }
 
     static async delPhone(req, res) {

@@ -31,7 +31,18 @@ export const addNewPhone = createAsyncThunk(
     'phones/addPhones',
     async function (data) {
         const phones = await axios.post(`${api_key}/addPhone`, data)
-        return phones
+    }
+)
+
+export const getMorePhone = createAsyncThunk(
+    'phones/getMorePhone',
+    async function (id) {
+        const response = await fetch(`${api_key}/morePhone/${id}`)
+        if (!response.ok) {
+            throw new Error('server no working')
+        }
+        const phones = await response.json()
+        return phones.phones
     }
 )
 
@@ -45,9 +56,6 @@ export const phoneSlice = createSlice({
     },
     reducers: {
         addPhone: (state, action) => {
-            state.phones = action.payload
-        },
-        morePhone: (state, action) => {
             state.phones = action.payload
         },
         removePhone: (state, action) => {
@@ -100,6 +108,20 @@ export const phoneSlice = createSlice({
             state.phones = action.payload
         },
         [addNewPhone.rejected]: () => {
+            console.log('error')
+        },
+
+
+
+        [getMorePhone.pending]: (state) => {
+            state.status = 'loading'
+            state.error = null
+        },
+        [getMorePhone.fulfilled]: (state, action) => {
+            state.status = 'resolved'
+            state.phones = action.payload
+        },
+        [getMorePhone.rejected]: () => {
             console.log('error')
         },
     }
