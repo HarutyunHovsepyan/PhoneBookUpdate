@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addPhone } from "../store/phoneSlice";
+import { addNewPhone, addPhone } from "../store/phoneSlice";
 import '../style/editPhone.css'
 
 function AddPhone() {
@@ -15,7 +15,7 @@ function AddPhone() {
     } = useForm();
 
     const onClick = (data) => {
-        dispatch(addPhone(data))
+        dispatch(addNewPhone(data))
         reset()
         window.location.href = "/"
     }

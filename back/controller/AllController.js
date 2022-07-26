@@ -7,9 +7,9 @@ class AllController {
 
     static async addPhone(req, res) {
         const createPhoneNumber = await Phonebook.create({
-            ...req.body.payload
+            ...req.body
         })
-        res.send({ createPhoneNumber: req.body.data })
+        res.send(req.body)
     }
 
     static async allPhones(req, res) {
@@ -23,10 +23,10 @@ class AllController {
     }
 
     static async delPhone(req, res) {
-        const phone = await Phonebook.destroy({
+        const phones = await Phonebook.destroy({
             where: { id: req.params.id }
         })
-        res.send({ phone: phone })
+        res.send({ phones: phones })
     }
 
     static async editPhone(req, res) {

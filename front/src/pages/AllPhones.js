@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import '../style/allPhone.css'
-import { deletePhone, findAllPhone, fetchAllPhones } from "../store/phoneSlice";
+import { findAllPhone, fetchAllPhones, deletePhones } from "../store/phoneSlice";
 
 function AllPhones() {
     const phones = useSelector(state => state.phones.phones)
@@ -39,7 +39,7 @@ function AllPhones() {
                                         </li>
                                         <li className="list__item">
                                             <Link to={"editPhone/" + phone.id} className="fas fa-edit contact-to-edit" />
-                                            <button onClick={() => dispatch(deletePhone(phone.id))} className="fas fa-remove"></button>
+                                            <button onClick={() => dispatch(deletePhones(phone.id))} className="fas fa-remove"></button>
                                         </li>
                                     </div>
                                     <hr />
