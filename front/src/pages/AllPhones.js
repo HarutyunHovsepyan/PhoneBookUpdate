@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import '../style/allPhone.css'
-import { findAllPhone, fetchAllPhones, deletePhones } from "../store/phoneSlice";
+import { findAllPhone, fetchAllPhones, deletePhones, findPhone } from "../store/phoneSlice";
 
 function AllPhones() {
     const phones = useSelector(state => state.phones.phones)
@@ -11,7 +11,7 @@ function AllPhones() {
         dispatch(fetchAllPhones())
     }, [dispatch])
     const onChangeHandler = (text) => {
-        dispatch(findAllPhone(text))
+        dispatch(findPhone(text))
     }
     return (
         <div>

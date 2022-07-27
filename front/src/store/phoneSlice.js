@@ -19,6 +19,7 @@ export const fetchAllPhones = createAsyncThunk(
         }
     }
 )
+
 export const deletePhones = createAsyncThunk(
     'phones/deletePhones',
     async function (id, dispatch) {
@@ -30,7 +31,15 @@ export const deletePhones = createAsyncThunk(
 export const addNewPhone = createAsyncThunk(
     'phones/addPhones',
     async function (data) {
-        const phones = await axios.post(`${api_key}/addPhone`, data)
+        try {
+            const phones = await axios.post(`${api_key}/addPhone`, data)
+            if (!phones.ok) {
+                throw new Error('server no working')
+            }
+        }
+        catch (error) {
+            console.log('error')
+        }
     }
 )
 
@@ -46,6 +55,22 @@ export const getMorePhone = createAsyncThunk(
     }
 )
 
+export const editPhone = createAsyncThunk(
+    'phones/editPhone',
+    async function (data, id) {
+        const response = await axios.post(`${api_key}/editPhone/${id}`, data, id)
+        console.log(response)
+    }
+)
+
+export const findPhone = createAsyncThunk(
+    'phones/findPhone',
+    async function (text) {
+        const response = await axios.post(`${api_key}/findPhone`, { text })
+        return response.data.phones
+    }
+)
+
 export const phoneSlice = createSlice({
     name: 'phones',
     initialState: {
@@ -55,9 +80,6 @@ export const phoneSlice = createSlice({
         error: null
     },
     reducers: {
-        addPhone: (state, action) => {
-            state.phones = action.payload
-        },
         removePhone: (state, action) => {
             state.phones = state.phones.filter(phone => phone.id !== action.payload.id)
         },
@@ -124,9 +146,35 @@ export const phoneSlice = createSlice({
         [getMorePhone.rejected]: () => {
             console.log('error')
         },
+
+
+        [editPhone.pending]: (state) => {
+            state.status = 'loading'
+            state.error = null
+        },
+        [editPhone.fulfilled]: (state, action) => {
+            state.status = 'resolved'
+            state.phones = action.payload
+        },
+        [editPhone.rejected]: () => {
+            console.log('error')
+        },
+
+
+        [findPhone.pending]: (state) => {
+            state.status = 'loading'
+            state.error = null
+        },
+        [findPhone.fulfilled]: (state, action) => {
+            state.status = 'resolved'
+            state.phones = action.payload
+        },
+        [findPhone.rejected]: () => {
+            console.log('error')
+        },
     }
 })
 
-export const { addPhone, removePhone, morePhone, findAllPhone, editPhones } = phoneSlice.actions
+export const { addPhone, removePhone, morePhone, findAllPhone } = phoneSlice.actions
 
 export const phoneReducer = phoneSlice.reducer

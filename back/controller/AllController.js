@@ -30,23 +30,23 @@ class AllController {
     }
 
     static async editPhone(req, res) {
-        // const phones = await Phonebook.update({
-        //     name: req.body.name,
-        //     phoneNumber: req.body.phoneNumber
-        // },
-        //     { where: { dataId: req.params.id } }
-        // )
-        console.log('ok')
+        const phones = await Phonebook.update({
+            name: req.body.name,
+            phoneNumber: req.body.phoneNumber
+        },
+            { where: { id: req.params.id } }
+        )
+        res.send({ phones: phones })
+        console.log(req.params.id)
     }
 
     static async findPhone(req, res) {
-        let searchText = Object.keys(req.body)[0]
         const phones = await Phonebook.findAll({
             where: {
-                name: { [Op.like]: searchText }
+                name: { [Op.like]: `%${req.body.text}%` }
             }
         });
-        res.send({ phones: phones })
+        res.send({ phones })
     }
 }
 module.exports = { AllController }
