@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { editPhone, getMorePhone } from '../store/phoneSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { editPhone, getMorePhone } from '../store/phoneSlice'
+import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 import '../style/editPhone.css'
 
 function EditPhone() {
@@ -11,14 +11,13 @@ function EditPhone() {
     const dispatch = useDispatch()
     const {
         register,
-        reset,
         handleSubmit,
         formState: { errors },
     } = useForm();
     useEffect(() => {
         dispatch(getMorePhone(id))
     }, [])
-    function onChangePhone(data, id) {
+    const onChangePhone = (data) => {
         dispatch(editPhone(data, id))
     }
     return (
@@ -28,13 +27,13 @@ function EditPhone() {
                     <i onClick={() => window.location.href = "/"} className="fas fa-chevron-circle-left back-btn"></i>
                     <h1 className="header-main">Edit Phones</h1>
                 </header>
-                <form className="w-25" onSubmit={() => onChangePhone(phones, phones.id)}>
+                <form className="w-25" onSubmit={handleSubmit(onChangePhone)}>
                     <section className="contact-info">
                         <div className="info-line">
                             <i className="fas fa-user-circle icon-gradient"></i>
                             <label htmlFor="name"></label>
                             <input type="text" className="type" name="name"
-                                // placeholder={phones.name}
+                                placeholder={phones.name}
                                 {...register('name',
                                     { minLength: 3 },
                                     { required: true }
@@ -48,7 +47,7 @@ function EditPhone() {
                                 { minLength: 8 },
                                 { required: true }
                             )}
-                            // placeholder={phones.phoneNumber}
+                                placeholder={phones.phoneNumber}
                             />
                         </div>
                         {errors.phoneNumber && <p className="text-danger">Phone number must be minLength 8.</p>}

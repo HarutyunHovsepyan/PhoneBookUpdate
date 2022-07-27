@@ -37,7 +37,6 @@ class AllController {
             { where: { id: req.params.id } }
         )
         res.send({ phones: phones })
-        console.log(req.params.id)
     }
 
     static async findPhone(req, res) {

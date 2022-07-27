@@ -23,8 +23,16 @@ export const fetchAllPhones = createAsyncThunk(
 export const deletePhones = createAsyncThunk(
     'phones/deletePhones',
     async function (id, dispatch) {
-        const response = await fetch(`${api_key}/delPhones/${id}`)
-        dispatch(removePhone({ id }))
+        try {
+            const response = await axios.post(`${api_key}/delPhones/${id}`)
+            if (!response.ok) {
+                throw new Error('error')
+            }
+            dispatch(removePhone({ id }))
+        }
+        catch (error) {
+            console.log('error')
+        }
     }
 )
 
@@ -46,20 +54,33 @@ export const addNewPhone = createAsyncThunk(
 export const getMorePhone = createAsyncThunk(
     'phones/getMorePhone',
     async function (id) {
-        const response = await fetch(`${api_key}/morePhone/${id}`)
-        if (!response.ok) {
-            throw new Error('server no working')
+        try {
+            const response = await fetch(`${api_key}/morePhone/${id}`)
+            if (!response.ok) {
+                throw new Error('server no working')
+            }
+            const phones = await response.json()
+            return phones.phones
         }
-        const phones = await response.json()
-        return phones.phones
+        catch (error) {
+            console.log(error)
+        }
     }
 )
 
 export const editPhone = createAsyncThunk(
     'phones/editPhone',
     async function (data, id) {
-        const response = await axios.post(`${api_key}/editPhone/${id}`, data, id)
-        console.log(response)
+        try {
+            const response = await axios.post(`${api_key}/editPhone/${id}`, data)
+            if (!response.ok) {
+                throw new Error('server no working')
+            }
+            console.log(response)
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 )
 
@@ -83,16 +104,6 @@ export const phoneSlice = createSlice({
         removePhone: (state, action) => {
             state.phones = state.phones.filter(phone => phone.id !== action.payload.id)
         },
-        editPhones: (state, action) => {
-            state.phones = action.payload
-        },
-        findPhones: (state, action) => {
-            state.phones = action.payload
-        },
-        findAllPhone: (state, action) => {
-            state.phones = action.payload
-            state.loading = false
-        }
     },
     extraReducers: {
         [fetchAllPhones.pending]: (state) => {
@@ -175,6 +186,6 @@ export const phoneSlice = createSlice({
     }
 })
 
-export const { addPhone, removePhone, morePhone, findAllPhone } = phoneSlice.actions
+export const { removePhone } = phoneSlice.actions
 
 export const phoneReducer = phoneSlice.reducer

@@ -1,12 +1,11 @@
+import { addNewPhone } from "../store/phoneSlice";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { addNewPhone, addPhone } from "../store/phoneSlice";
+import { Link } from "react-router-dom";
 import '../style/editPhone.css'
 
 function AddPhone() {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     const {
         register,
         reset,

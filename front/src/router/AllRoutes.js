@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AddPhone from "../pages/AddPhone";
 import AllPhones from "../pages/AllPhones";
 import EditPhone from "../pages/EditPhone";
 import MorePhone from "../pages/MorePhone";
+import AddPhone from "../pages/AddPhone";
 
-function AllRouter() {   
+
+function AllRouter() {
     return (
         <BrowserRouter>
             <Routes>
