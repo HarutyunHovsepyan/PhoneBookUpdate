@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import '../style/editPhone.css'
 
+
 function AddPhone() {
     const dispatch = useDispatch()
     const {
@@ -16,7 +17,6 @@ function AddPhone() {
     const onClick = (data) => {
         dispatch(addNewPhone(data))
         reset()
-        window.location.href = "/"
     }
     return (
         <div>

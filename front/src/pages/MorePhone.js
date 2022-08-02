@@ -8,9 +8,11 @@ function MorePhone() {
     const { id } = useParams()
     const dispatch = useDispatch()
     let phones = useSelector(state => state.phones.phones)
+
     useEffect(() => {
         dispatch(getMorePhone(id))
     }, [])
+    
     return (
         <div className="container">
             <header className="hero">

@@ -12,14 +12,18 @@ function EditPhone() {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
     useEffect(() => {
         dispatch(getMorePhone(id))
     }, [])
+
     const onChangePhone = (data) => {
-        dispatch(editPhone(data, id))
+        dispatch(editPhone({ data, id: phones.id }))
+        reset()
     }
+
     return (
         <div>
             <div className="container">
@@ -38,6 +42,7 @@ function EditPhone() {
                                     { minLength: 3 },
                                     { required: true }
                                 )} />
+                            {/* <input type="text" placeholder={phones.id} name='id' {...register('id')} /> */}
                         </div>
                         {errors.name && <p className="text-danger">No Name or Name length less 3</p>}
                         <div className="info-line">

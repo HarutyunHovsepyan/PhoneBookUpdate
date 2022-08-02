@@ -13,8 +13,8 @@ app.get("/", (req, res) => {
 app.post("/addPhone", AllController.addPhone)
 app.get("/allPhone", AllController.allPhones)
 app.get("/morePhone/:id", AllController.getPhone)
-app.post("/delPhones/:id", AllController.delPhone)
-app.post("/editPhone/:id", AllController.editPhone)
+app.delete("/delPhones/:id", AllController.delPhone)
+app.put("/editPhone/:id", AllController.editPhones)
 app.post("/findPhone", AllController.findPhone)
 
 
